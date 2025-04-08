@@ -3,6 +3,7 @@ const zxcvbn = require("zxcvbn");
 
 const User = require("../models/User");
 const { createError } = require("../utils/errors");
+const { createToken } = require("../utils/auth-utils");
 
 const validatePassword = (password) => {
   const result = zxcvbn(password);
@@ -45,4 +46,24 @@ const createUser = async (userData) => {
   }
 }
 
-module.exports = { createUser };
+const checkUser = async (user, password) => {
+  try {
+    const verified = await argon2.verify(user.password, password);
+
+    if(verified) {
+      const token = createToken({
+        _id: user._id
+      });
+      return token;
+    } else {
+      throw createError("Invalid email or password", 401);
+    }
+  } catch (error) {
+    if(error.statusCode === 401) {
+      throw error;
+    }
+    throw createError("Failed to verify password (server error)", 500);
+  }
+}
+
+module.exports = { createUser, checkUser };
