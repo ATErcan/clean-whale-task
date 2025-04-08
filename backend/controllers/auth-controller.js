@@ -1,4 +1,5 @@
-const { createUser } = require("../services/user-service");
+const User = require("../models/User");
+const { createUser, checkUser } = require("../services/user-service");
 const { createToken } = require("../utils/auth-utils");
 const { createValidationError, createError } = require("../utils/errors");
 
@@ -29,4 +30,33 @@ const signup = async (req, res, next) => {
   }
 }
 
-module.exports = { signup };
+const login = async (req, res, next) => {
+  const { email, password } = req.body;
+
+  try {
+    if (!email || !password) {
+      throw createError("Email and password are required.", 400);
+    }
+
+    const user = await User.findOne({ email });
+    if(!user) {
+      throw createError("Invalid email or password", 401);
+    }
+
+    const token = await checkUser(user, password);
+
+    const userData = user.toObject();
+    delete userData.password;
+
+    res.status(200).json({
+      jwt: {
+        token
+      },
+      user: userData
+    })
+  } catch (error) {
+    return next(error);
+  }
+}
+
+module.exports = { signup, login };
