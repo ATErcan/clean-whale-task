@@ -1,6 +1,18 @@
 const argon2 = require("argon2");
+const zxcvbn = require("zxcvbn");
 
 const User = require("../models/User");
+
+const validatePassword = (password) => {
+  const result = zxcvbn(password);
+
+  if(result.score < 3) {
+    throw {
+      message: "Password is too weak. Use a stronger password.",
+      statusCode: 400,
+    };
+  }
+}
 
 const hashPassword = async (userData) => {
   const user = new User(userData);
@@ -20,6 +32,8 @@ const hashPassword = async (userData) => {
 }
 
 const createUser = async (userData) => {
+  validatePassword(userData.password);
+  
   try {
     const user = await hashPassword(userData);
     await user.save();
