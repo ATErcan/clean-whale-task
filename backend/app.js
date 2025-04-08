@@ -5,11 +5,14 @@ const mongoose = require("mongoose");
 
 const router = express.Router();
 
+const authRoutes = require("./routes/auth-routes");
+
+const handleErrors = require("./middleware/errors-middleware");
+
 const app = express();
 
 // middleware
 app.use(express.json());
-app.use("/api", router);
 
 async function main() {
   const dbURI = process.env.DB_URI;
@@ -32,3 +35,7 @@ try {
 }
 
 router.get("/home", (req, res) => res.send("Hello World!"));
+router.use("/auth", authRoutes);
+
+app.use("/api", router);
+app.use(handleErrors);
