@@ -34,7 +34,6 @@ try {
   console.error(error);
 }
 
-router.get("/home", (req, res) => res.send("Hello World!"));
 router.use("/auth", authRoutes);
 
 app.use("/api", router);
