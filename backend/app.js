@@ -7,6 +7,8 @@ const router = express.Router();
 
 const authRoutes = require("./routes/auth-routes");
 
+const handleErrors = require("./middleware/errors-middleware");
+
 const app = express();
 
 // middleware
@@ -36,3 +38,4 @@ router.get("/home", (req, res) => res.send("Hello World!"));
 router.use("/auth", authRoutes);
 
 app.use("/api", router);
+app.use(handleErrors);
