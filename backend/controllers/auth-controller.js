@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const { createUser } = require("../services/user-service");
+const { createUser, checkUser } = require("../services/user-service");
 const { createToken } = require("../utils/auth-utils");
 const { createValidationError, createError } = require("../utils/errors");
 
@@ -42,9 +42,20 @@ const login = async (req, res, next) => {
     if(!user) {
       throw createError("Invalid email or password", 401);
     }
+
+    const token = await checkUser(user, password);
+
+    const userData = user.toObject();
+    delete userData.password;
+
+    res.status(200).json({
+      jwt: {
+        token
+      },
+      user: userData
+    })
   } catch (error) {
-    const validationError = createValidationError(error);
-    return next(validationError || error);
+    return next(error);
   }
 }
 
