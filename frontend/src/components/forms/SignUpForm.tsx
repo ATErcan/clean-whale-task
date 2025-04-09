@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { SignUpFormValidation } from "@/lib/validation";
 import SingleAccordion from "../helpers/SingleAccordion";
+import { signUp } from "@/lib/tools/api";
 
 export default function SignUpForm() {
   const signupForm = useForm<z.infer<typeof SignUpFormValidation>>({
@@ -28,9 +29,13 @@ export default function SignUpForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof SignUpFormValidation>) {
-    // TODO: implement signup logic
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof SignUpFormValidation>) {
+    try {
+      const data = await signUp({ email: values.email, password: values.password });
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
