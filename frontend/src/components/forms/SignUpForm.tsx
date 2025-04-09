@@ -4,6 +4,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -20,6 +22,8 @@ import SingleAccordion from "../helpers/SingleAccordion";
 import { signUp } from "@/lib/tools/api";
 
 export default function SignUpForm() {
+  const router = useRouter();
+
   const signupForm = useForm<z.infer<typeof SignUpFormValidation>>({
     resolver: zodResolver(SignUpFormValidation),
     defaultValues: {
@@ -32,7 +36,19 @@ export default function SignUpForm() {
   async function onSubmit(values: z.infer<typeof SignUpFormValidation>) {
     try {
       const data = await signUp({ email: values.email, password: values.password });
-      console.log(data);
+      if(data.user) {
+        const res = await signIn("credentials", {
+          email: values.email,
+          password: values.password,
+          redirect: false,
+        });
+
+        if (res?.ok) {
+          router.push("/");
+        } else {
+          console.log(res?.error);
+        }
+      }
     } catch (error) {
       console.error(error);
     }
