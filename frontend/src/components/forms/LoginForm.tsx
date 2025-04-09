@@ -4,6 +4,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -18,6 +20,8 @@ import { Input } from "@/components/ui/input";
 import { LoginFormValidation } from "@/lib/validation";
 
 export default function LoginForm() {
+  const router = useRouter();
+
   const loginForm = useForm<z.infer<typeof LoginFormValidation>>({
     resolver: zodResolver(LoginFormValidation),
     defaultValues: {
@@ -26,9 +30,22 @@ export default function LoginForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof LoginFormValidation>) {
-    // TODO: implement login logic
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof LoginFormValidation>) {
+    try {
+      const res = await signIn("credentials", {
+        email: values.email,
+        password: values.password,
+        redirect: false,
+      });
+
+      if (res?.ok) {
+        router.push("/");
+      } else {
+        console.log(res?.error);
+      }
+    } catch (error) {
+      console.error("Unexpected error: ", error);
+    }
   }
 
   return (
