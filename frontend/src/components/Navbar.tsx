@@ -11,6 +11,7 @@ export default function Navbar() {
             src={"/logo.svg"}
             width={100}
             height={62}
+            className="w-3/4 h-auto md:w-full"
             priority
           />
         </Link>

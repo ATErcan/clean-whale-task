@@ -2,9 +2,13 @@
 
 import { signOut } from "next-auth/react";
 import Image from "next/image";
+import toast from "react-hot-toast";
 
 export default function LogoutBtn() {
-  const logout = () => signOut();
+  const logout = () => {
+    signOut();
+    toast.success("Logged out successfully!");
+  };
   
   return (
     <p
@@ -12,7 +16,7 @@ export default function LogoutBtn() {
       onClick={logout}
     >
       <Image
-        className="dark:invert"
+        className="w-5 h-5 dark:invert"
         src="/vercel.svg"
         alt="Vercel logomark"
         width={20}

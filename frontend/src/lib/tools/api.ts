@@ -27,7 +27,6 @@ export const postData = async <T>(
     );
     return response.data;
   } catch (error) {
-    // TODO: update error handling
     console.error("Error posting data:", error);
     if (axios.isAxiosError(error)) {
       throw error.response?.data.error;
