@@ -1,11 +1,7 @@
-import { getServerSession } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
 
-import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
-
-export default async function Navbar() {
-  const session = await getServerSession(authOptions);
+export default function Navbar() {
 
   return (
     <nav className="p-4 shadow-2xl">
@@ -19,11 +15,6 @@ export default async function Navbar() {
             priority
           />
         </Link>
-        {!session && <ul className="flex gap-1">
-          <li>
-            <Link href={"/login"}>Login</Link>
-          </li>
-        </ul>}
       </div>
     </nav>
   );
