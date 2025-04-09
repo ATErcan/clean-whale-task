@@ -16,7 +16,7 @@ export default function LogoutBtn() {
       onClick={logout}
     >
       <Image
-        className="dark:invert"
+        className="w-5 h-5 dark:invert"
         src="/vercel.svg"
         alt="Vercel logomark"
         width={20}
