@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const { rateLimit } = require("express-rate-limit");
 
 const router = express.Router();
 
@@ -12,6 +13,14 @@ const handleErrors = require("./middleware/errors-middleware");
 
 const app = express();
 
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  limit: 50,
+  standardHeaders: "draft-8",
+  legacyHeaders: false,
+  message: { error: "Too many requests. Please try again after 15 minutes." },
+});
+
 // middleware
 app.use(
   cors({
@@ -19,6 +28,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(limiter);
 app.use(express.json());
 
 async function main() {
