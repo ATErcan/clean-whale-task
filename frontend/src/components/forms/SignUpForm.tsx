@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { SignUpFormValidation } from "@/lib/validation";
+import SingleAccordion from "../helpers/SingleAccordion";
 
 export default function SignUpForm() {
   const signupForm = useForm<z.infer<typeof SignUpFormValidation>>({
@@ -96,9 +97,17 @@ export default function SignUpForm() {
           Sign Up
         </Button>
       </form>
-      <p className="w-full max-w-80 mx-auto mt-2 text-sm tracking-[-.01em]">
+      <p className="w-full max-w-80 mx-auto my-2 text-sm tracking-[-.01em]">
         Already have an account? <Link href={"/login"} className="text-secondary-foreground font-semibold">Sign in</Link>
       </p>
+      <div className="w-full max-w-80 mx-auto">
+        <SingleAccordion trigger="How to create a strong password?">
+          <ul className="text-xs font-medium flex flex-col gap-1">
+            <li>* Don't use common combinations such as 12345678</li>
+            <li>* Use a combination of digits, small and capitalized letters, symbols and special characters</li>
+          </ul>
+        </SingleAccordion>
+      </div>
     </Form>
   );
 }
