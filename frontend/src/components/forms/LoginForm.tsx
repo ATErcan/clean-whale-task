@@ -3,6 +3,7 @@
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -34,7 +35,7 @@ export default function LoginForm() {
     <Form {...loginForm}>
       <form
         onSubmit={loginForm.handleSubmit(onSubmit)}
-        className="w-full max-w-80 mx-auto space-y-2"
+        className="w-full max-w-80 mx-auto space-y-4"
       >
         <FormField
           control={loginForm.control}
@@ -76,6 +77,9 @@ export default function LoginForm() {
           Login
         </Button>
       </form>
+      <p className="w-full max-w-80 mx-auto mt-2 text-sm tracking-[-.01em]">
+        Don't have an account? <Link href={"/signup"} className="text-secondary-foreground font-semibold">Sign up</Link>
+      </p>
     </Form>
   );
 }
