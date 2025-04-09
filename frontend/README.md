@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# 👤 Next CleanWhale Auth
 
-First, run the development server:
+This is the frontend of a full-stack authentication system built with Next.js (App Router) and NextAuth.js. The application provides a secure and user-friendly way to handle authentication using JWT-based sessions, with full support for form validation, protected routes, and session handling.
 
+## Features
+
+- 🔐 Authentication powered by NextAuth.js
+  - ✅ Uses a custom Credentials Provider to authenticate users
+  - ✅ JWT-based session management with 30-minute expiration.
+  - ✅ Session data includes user ID, email, and access token.
+- 🧠 Client-side form validation
+  - ✅ All inputs are validated using Zod and React Hook Form.
+  - ✅ Passwords are required to be strong and properly structured.
+- 🚫 Route protection
+  - ✅ Authenticated users are redirected away from /login and /signup.
+  - ✅ Unauthenticated users cannot access the main (/) route.
+  - ✅ Middleware guards ensure proper access flow.
+- 💄 Clean UI structure
+  - ✅ Feedback is provided for invalid credentials or failed sign-ins.
+
+
+## 🛠️ Tech Stack
+
+⚡ Next.js – React-based framework for server-side rendering & static site generation
+
+🎨 Tailwind CSS – Utility-first styling for fast UI development
+
+💡 ShadCN – Pre-styled UI components for a modern look
+
+✅ React Hook Form – Form handling and validation
+
+🛡️ Zod – Schema validation for form inputs
+
+🔒 NextAuth.js – Authentication via Credentials Provider (JWT-based)
+
+🔥 react-hot-toast – User-friendly toast notifications
+
+📦 Axios – Promise-based HTTP client for signup and custom API requests
+## Installation
+Clone the project, go to frontend directory and install the dependencies
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+  $ git clone https://github.com/ATErcan/clean-whale-task.git
+
+  $ cd frontend
+
+  $ npm install
+```
+Create a .env file by following the Environment Variables section. Run the development server with the command below
+```bash
+  $ npm run dev
+```
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file
+
+`API_URL`
+
+API_URL is the backend url. It depends on what port you're running your backend server.
+
+`AUTH_SECRET`
+
+Generate a AUTH_SECRET variable. You can generate it by running the following command.
+```bash
+  $ npx auth secret
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Authors
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- [@ATErcan](https://www.github.com/ATErcan)
+Ahmet Talha Ercan
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+All codes in this project are written by me.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🔗 Links
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/ahmet-talha-ercan/)
