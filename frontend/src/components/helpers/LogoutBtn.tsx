@@ -2,9 +2,13 @@
 
 import { signOut } from "next-auth/react";
 import Image from "next/image";
+import toast from "react-hot-toast";
 
 export default function LogoutBtn() {
-  const logout = () => signOut();
+  const logout = () => {
+    signOut();
+    toast.success("Logged out successfully!");
+  };
   
   return (
     <p

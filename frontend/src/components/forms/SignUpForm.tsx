@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -44,13 +45,16 @@ export default function SignUpForm() {
         });
 
         if (res?.ok) {
+          toast.success("Sign Up Success!");
           router.push("/");
         } else {
-          console.log(res?.error);
+          toast.error(res?.error || "Something went wrong");
         }
       }
     } catch (error) {
-      console.error(error);
+      toast.error(
+        typeof error === "string" ? error : "An unexpected error occured"
+      );
     }
   }
 
